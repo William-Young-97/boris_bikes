@@ -9,10 +9,22 @@ describe DockingStation do
 
   describe "#dock" do
     it "It raises an error if more than 20 bike" do
-    DockingStation::DEFFAULT_CAPACTIY.times { subject.dock(Bike.new) }
+    subject.capacity.times { subject.dock(Bike.new) }
     expect {subject.dock(Bike.new)}.to raise_error "Too many bikes docked."
     end
   end
+
+  describe "#initialization" do
+    subject { DockingStation.new}
+    let(:bike) { Bike.new}
+    it "defaults_capacity" do
+      described_class::DEFFAULT_CAPACTIY.times do
+        subject.dock(bike)
+      end
+      expect { subject.dock(bike) }.to raise_error "Too many bikes docked."
+    end
+  end
+
 
   it "bike is working" do
     bike1 = Bike.new
@@ -33,6 +45,10 @@ describe DockingStation do
     bike = Bike.new
     subject.dock(bike)
     expect(subject.bike).to eq nil # Test doesnt show anything
+  end
+
+  it "Returns a default capacity" do
+  expect(subject.capacity).to eq DockingStation::DEFFAULT_CAPACTIY
   end
 end
 
