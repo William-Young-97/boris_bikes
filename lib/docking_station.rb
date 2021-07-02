@@ -10,8 +10,11 @@ class DockingStation
   end
 
   def dock(bike)
+    fail "Too many bikes docked." if @bike
     @bike = bike
   end
 end
+
+
 
 
