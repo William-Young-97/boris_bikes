@@ -7,6 +7,7 @@ A command line programme built using ruby.
 - Test drive a programme through OOP design.
 - Understand encapuslation and abstraction.
 - Use git on a windows operating system.
+- Set up windows subsystem for linux.
 
 ## Features
 
