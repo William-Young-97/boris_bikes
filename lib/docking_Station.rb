@@ -2,6 +2,8 @@ require_relative 'bike'
 
 class Docking_station
 
+MAX_CAPACITY = 20
+
   def initialize
     @storage = []
   end
@@ -12,6 +14,7 @@ class Docking_station
   end
 
   def dock(bike)
+    fail "Cannot dock; max capacity reached." if @storage.count >= MAX_CAPACITY
     @storage << bike
   end
 end
