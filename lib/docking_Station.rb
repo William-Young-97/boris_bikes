@@ -3,9 +3,10 @@ require_relative 'bike'
 class Docking_station
 
 MAX_CAPACITY = 20
-
-  def initialize
+attr_accessor :capacity
+  def initialize(capacity=MAX_CAPACITY)
     @storage = []
+    @capacity = capacity
   end
 
   def release_bike
@@ -18,11 +19,11 @@ MAX_CAPACITY = 20
     storage_full?
     @storage << bike
   end
-
+  
   private
 
   def storage_full?
-    fail "Cannot dock; max capacity reached." if @storage.count >= MAX_CAPACITY
+    fail "Cannot dock; max capacity reached." if @storage.count >= capacity
   end
 
   def storage_empty?

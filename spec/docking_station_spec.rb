@@ -25,6 +25,11 @@ describe Docking_station do
       Docking_station::MAX_CAPACITY.times { subject.dock(Bike.new) }
       expect{ subject.dock(bike) }.to raise_error("Cannot dock; max capacity reached.")
     end
+    it 'Allows you to set a max capacity' do
+      limited_station = Docking_station.new(1)
+      limited_station.dock(Bike.new)
+      expect{ limited_station.dock(bike) }.to raise_error("Cannot dock; max capacity reached.")
+    end
     it 'Fails if you try to dock the same bike again' do
       subject.dock(bike)
       expect{ subject.dock(bike) }.to raise_error("Bike already docked.") 
