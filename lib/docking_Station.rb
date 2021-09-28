@@ -11,8 +11,8 @@ attr_accessor :capacity, :storage
 
   def release_bike
     storage_empty?
+    @storage.reverse_each { |bike| return bike if !bike.broken }
     broken?
-    @storage.pop
   end
 
   def dock(bike)
@@ -36,7 +36,7 @@ attr_accessor :capacity, :storage
   end
 
   def broken?
-    fail "Cannot release a broken bike." if @storage[-1].broken == true
+    fail "Cannot release a broken bike."
   end
 
 end
