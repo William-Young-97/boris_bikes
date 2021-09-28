@@ -14,6 +14,7 @@ MAX_CAPACITY = 20
   end
 
   def dock(bike)
+    fail "Bike already docked." if @storage.include?(bike)
     fail "Cannot dock; max capacity reached." if @storage.count >= MAX_CAPACITY
     @storage << bike
   end
