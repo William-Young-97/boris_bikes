@@ -9,13 +9,28 @@ MAX_CAPACITY = 20
   end
 
   def release_bike
-    fail "No bikes to release." if @storage == []
+    storage_empty?
     @storage.pop
   end
 
   def dock(bike)
-    fail "Bike already docked." if @storage.include?(bike)
-    fail "Cannot dock; max capacity reached." if @storage.count >= MAX_CAPACITY
+    duplicate?(bike)
+    storage_full?
     @storage << bike
   end
+
+  private
+
+  def storage_full?
+    fail "Cannot dock; max capacity reached." if @storage.count >= MAX_CAPACITY
+  end
+
+  def storage_empty?
+    fail "No bikes to release." if @storage == []
+  end
+  
+  def duplicate?(bike)
+    fail "Bike already docked." if @storage.include?(bike)
+  end
+
 end
