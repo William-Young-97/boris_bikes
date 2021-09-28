@@ -3,7 +3,7 @@ require_relative 'bike'
 class Docking_station
 
 MAX_CAPACITY = 20
-attr_accessor :capacity
+attr_accessor :capacity, :storage
   def initialize(capacity=MAX_CAPACITY)
     @storage = []
     @capacity = capacity
@@ -11,6 +11,7 @@ attr_accessor :capacity
 
   def release_bike
     storage_empty?
+    broken?
     @storage.pop
   end
 
@@ -32,6 +33,10 @@ attr_accessor :capacity
   
   def duplicate?(bike)
     fail "Bike already docked." if @storage.include?(bike)
+  end
+
+  def broken?
+    fail "Cannot release a broken bike." if @storage[-1].broken == true
   end
 
 end
