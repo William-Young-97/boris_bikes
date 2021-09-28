@@ -21,6 +21,14 @@ describe Docking_station do
       subject.dock(broken_bike)
       expect{ subject.release_bike }.to raise_error("Cannot release a broken bike.")
     end
+    it 'Will release 1st unbroken bike' do
+      good_bike = Bike.new
+      subject.dock(good_bike)
+      broken_bike = bike
+      broken_bike.report_broken
+      subject.dock(broken_bike)
+      expect(subject.release_bike).to eq(good_bike)
+    end
   end
     
   describe "#dock" do
