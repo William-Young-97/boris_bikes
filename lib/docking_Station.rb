@@ -7,11 +7,11 @@ class Docking_station
   end
 
   def release_bike
-    Bike.new
+    fail "No bikes to release." if @storage == []
+    @storage.pop
   end
 
   def dock(bike)
-    @bike = bike
-    @storage << @bike
+    @storage << bike
   end
 end
