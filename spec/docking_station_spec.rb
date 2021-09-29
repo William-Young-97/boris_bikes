@@ -36,13 +36,13 @@ describe Docking_station do
       expect(subject.dock(bike)).to eq([bike])
     end 
     it 'Fails if docking station is full' do
-      Docking_station::MAX_CAPACITY.times { subject.dock(Bike.new) }
-      expect{ subject.dock(bike) }.to raise_error("Cannot dock; max capacity reached.")
+      Docking_station::MAX_CAPACITY.times { subject.dock double(:bike) }
+      expect{ subject.dock double(:bike) }.to raise_error("Cannot dock; max capacity reached.")
     end
     it 'Allows you to set a max capacity' do
       limited_station = Docking_station.new(1)
-      limited_station.dock(Bike.new)
-      expect{ limited_station.dock(bike) }.to raise_error("Cannot dock; max capacity reached.")
+      limited_station.dock double(:bike)
+      expect{ limited_station.dock double(:bike) }.to raise_error("Cannot dock; max capacity reached.")
     end
     it 'Fails if you try to dock the same bike again' do
       subject.dock(bike)
