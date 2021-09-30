@@ -8,21 +8,21 @@ class Van
 
   def collect(station)
     station.storage.map { |bike| @van_storage << bike if bike.broken }
-    clear_broken(station)
+    station_clear_broken(station)
   end
 
   def drop_off(garage)
     @van_storage.map { |bike| garage.garage_storage << bike if bike.broken }
-    clear_broken2(garage)
+    van_clear_broken(garage)
   end
 
   private
 
-  def clear_broken(station)
+  def station_clear_broken(station)
     station.storage.delete_if { |bike| bike.broken }
   end
 
-  def clear_broken2(garage)
+  def van_clear_broken(garage)
     @van_storage.delete_if { |bike| bike.broken }
   end
 
