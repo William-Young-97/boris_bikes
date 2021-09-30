@@ -17,7 +17,6 @@ Run through the command line, boris bikes is an exercise to demonstrate OOP prin
 -  report broken bikes,
 -  repair broken bikes at garages,
 -  transport bikes from both stations and garages. 
-- Test driven development.
 
 ## Technologies used
 
