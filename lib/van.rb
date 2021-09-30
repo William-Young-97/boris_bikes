@@ -16,6 +16,10 @@ class Van
     garage_clear_working(garage)
   end
 
+  def station_drop_off(station)
+    @van_storage.map { |bike| station.storage << bike if !bike.broken }
+    van_clear_working(station)
+  end
 
   def garage_drop_off(garage)
     @van_storage.map { |bike| garage.garage_storage << bike if bike.broken }
@@ -36,4 +40,12 @@ class Van
     @van_storage.delete_if { |bike| bike.broken }
   end
 
+  def van_clear_working(station)
+    @van_storage.delete_if { |bike| !bike.broken }
+  end
+
 end
+
+# Notes 
+
+# Consider making a custom push and delete method

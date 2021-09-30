@@ -3,9 +3,9 @@ require 'docking_station'
 describe Van do
   
   let(:bike) { double(:bike, broken: false)}
-  let(:broken_bike) { double(:bike, broken: true) }
+  let(:broken_bike) { double(:broken_bike, broken: true) }
   let(:docking_station) { double(:station, dock: broken_bike, storage: [broken_bike]) }
-  let(:garage) { double(:garage, garage_storage: [], fix: broken_bike) }
+  let(:garage) { double(:garage, garage_storage: [bike], fix: broken_bike) }
   
   describe "#station_collect" do
     it 'Allows the van to collect broken bikes from stations' do
@@ -29,12 +29,20 @@ describe Van do
       expect(subject.garage_collect(garage2)).to eq([bike_i])
     end
   end
+  
+  describe "#station_drop_off" do
+    it 'Allows the van to drop off working bikes at docking stations' do
+      subject.garage_collect(garage) 
+      expect(subject.station_drop_off(docking_station)).to eq([])
+      expect(docking_station.storage).to eq([broken_bike, bike])
+    end
+  end
 
   describe "#garage_drop_off" do
     it 'Allows the van to drop off broken bikes at the garage' do
       subject.station_collect(docking_station)
       expect(subject.garage_drop_off(garage)).to eq([])
-      expect(garage.garage_storage).to eq([broken_bike])
+      expect(garage.garage_storage).to eq([bike, broken_bike])
     end
   end
 
