@@ -1,9 +1,10 @@
 require_relative 'bike'
+require_relative 'van'
 
 class Docking_station
 
 MAX_CAPACITY = 20
-attr_accessor :capacity
+attr_accessor :capacity, :storage
   def initialize(capacity=MAX_CAPACITY)
     @storage = []
     @capacity = capacity

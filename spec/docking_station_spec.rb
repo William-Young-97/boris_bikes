@@ -1,7 +1,7 @@
 require 'docking_station'
 
 describe Docking_station do
-  let(:working_bike) { double(:bike, broken: false)}
+  let(:working_bike) { double(:bike, broken: false) }
   let(:broken_bike) { double(:bike, broken: true) }
   it 'Docking station responds to release bike method' do
     expect(Docking_station.new).to respond_to(:release_bike)
