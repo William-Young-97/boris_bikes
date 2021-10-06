@@ -3,20 +3,30 @@ require 'docking_station'
 describe Van do
   
   let(:bike) { double(:bike, broken: false)}
-  let(:broken_bike) { double(:broken_bike, broken: true) }
-  let(:docking_station) { double(:station, dock: broken_bike, storage: [broken_bike]) }
+  let(:broken_bike) { double(:broken_bike, broken: true ) }
+  let(:docking_station) { double(:station, dock: broken_bike, storage: [ broken_bike]) }
   let(:garage) { double(:garage, garage_storage: [bike], fix: broken_bike) }
   
   describe "#station_collect" do
     it 'Allows the van to collect broken bikes from stations' do
-      expect(subject.station_collect(docking_station)).to eq([])
+      subject.station_collect(docking_station)
       expect(subject.van_storage).to eq([broken_bike])
+    end
+  end
+   
+    describe "#storage_full?" do
+      it 'Raises an error if it tries to exceed vans max capacity' do
+        docking_station = Docking_station.new
+        10.times {bike = Bike.new; bike.report_broken; docking_station.dock(bike) } # More than 10 objects breaks runtime as method collects all bikes.
+        subject.station_collect(docking_station) 
+        10.times {bike = Bike.new; bike.report_broken; docking_station.dock(bike) }
+        expect{ subject.station_collect(docking_station) }.to raise_error("Cannot collect; max capacity reached.")
     end
   end
 
   describe "#garage_collect" do
 
-    let(:bike_i) { Bike.new }
+    let(:bike_i) { Bike.new } # bike_instance
     let(:docking_station2) { double(:station, dock: bike_i, storage: [bike_i]) }
     let(:garage2) { double(:garage, garage_storage: [], fix: bike_i) }
     
@@ -45,5 +55,4 @@ describe Van do
       expect(garage.garage_storage).to eq([bike, broken_bike])
     end
   end
-
 end

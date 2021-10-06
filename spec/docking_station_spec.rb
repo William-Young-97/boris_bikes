@@ -1,7 +1,9 @@
 require 'docking_station'
+require './support/shared_examples_bike_container'
 
 describe Docking_station do
-  
+  it_behaves_like BikeContainer
+
   let(:working_bike) { double(:bike, broken: false) }
   let(:broken_bike) { double(:bike, broken: true) }
   
@@ -33,18 +35,17 @@ describe Docking_station do
       expect(subject.dock(working_bike)).to eq([working_bike])
     end 
     it 'Fails if docking station is full' do
-      Docking_station::MAX_CAPACITY.times { subject.dock double(:bike) }
-      expect{ subject.dock double(:bike) }.to raise_error("Cannot dock; max capacity reached.")
+      Docking_station::DEFAULT_CAPACITY.times { subject.dock double(:bike) }
+      expect{ subject.dock double(:bike) }.to raise_error("#{described_class.name} full.")
     end
     it 'Allows you to set a max capacity' do
       limited_station = Docking_station.new(1)
       limited_station.dock double(:bike)
-      expect{ limited_station.dock double(:bike) }.to raise_error("Cannot dock; max capacity reached.")
+      expect{ limited_station.dock double(:bike) }.to raise_error("#{described_class.name} full.")
     end
     it 'Fails if you try to dock the same bike again' do
       subject.dock(working_bike)
       expect{ subject.dock(working_bike) }.to raise_error("Bike already docked.") 
     end   
   end 
-  
 end

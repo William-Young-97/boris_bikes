@@ -9,5 +9,4 @@ class Garage
   def fix
     @garage_storage.each { |bike| bike.broken = false }
   end
-
 end
