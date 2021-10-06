@@ -16,7 +16,7 @@ module BikeContainer
   private
 
   def storage_full?
-    fail "Cannot dock; max capacity reached." if @bikes.count >= capacity
+    fail "#{self.class.name} full." if @bikes.count >= capacity
   end
 
 end

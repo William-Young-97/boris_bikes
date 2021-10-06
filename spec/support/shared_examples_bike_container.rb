@@ -22,7 +22,7 @@ shared_examples BikeContainer do
     end
     it 'Raises an error when full' do
       subject.capacity.times { subject.add_bike(bike) }
-      expect { subject.add_bike(bike) }.to raise_error("Cannot dock; max capacity reached.")
+      expect { subject.add_bike(bike) }.to raise_error("#{described_class.name} full.")
     end
   end
 end
