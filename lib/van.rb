@@ -8,11 +8,13 @@ class Van
     @capacity = VAN_MAX_CAPACITY
   end
 
+  #look into .shift and custom del/push method
+  
   def station_collect(station) # Possibly set an amount of bikes it can remove capped at 10?
-    station.storage.map { |bike| @van_storage << bike } # Ideally remove bikes as I go
+    station.storage.map { |bike| @van_storage << bike } # Ideally remove bikes as I go (cannot del and iterate)
     station_clear_broken(station) # Clears all bikes if 11 taken (1 extra)
     fail "Cannot collect; max capacity reached." if storage_full? 
-    # station_clear_broken(station) Doesn't run if over 11 bikes in storage 
+    # station_clear_broken(station) Runtime fail if over 11 bikes in storage 
   end
 
   def garage_collect(garage)
@@ -37,7 +39,7 @@ class Van
   end
 
   def station_clear_broken(station) 
-    station.storage.delete_if { |bike| bike.broken }
+    station.storage.delete_if { |bike| @van_storage.include?(bike) }
   end
 
   def van_clear_broken(garage)
