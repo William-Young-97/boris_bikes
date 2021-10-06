@@ -1,6 +1,6 @@
 class Van
 
-  attr_accessor :van_storage
+  attr_accessor :van_storage, :capacity
   VAN_MAX_CAPACITY = 10
 
   def initialize
@@ -8,10 +8,11 @@ class Van
     @capacity = VAN_MAX_CAPACITY
   end
 
-  def station_collect(station)
-    station.storage.map { |bike| @van_storage << bike if bike.broken && !storage_full? }
-    storage_full?
-    station_clear_broken(station)
+  def station_collect(station) # Possibly set an amount of bikes it can remove capped at 10?
+    station.storage.map { |bike| @van_storage << bike } # Ideally remove bikes as I go
+    station_clear_broken(station) # Clears all bikes if 11 taken (1 extra)
+    fail "Cannot collect; max capacity reached." if storage_full? 
+    # station_clear_broken(station) Doesn't run if over 11 bikes in storage 
   end
 
   def garage_collect(garage)
@@ -35,7 +36,7 @@ class Van
     garage.garage_storage.delete_if { |bike| !bike.broken }
   end
 
-  def station_clear_broken(station)
+  def station_clear_broken(station) 
     station.storage.delete_if { |bike| bike.broken }
   end
 
@@ -48,7 +49,7 @@ class Van
   end
 
   def storage_full?
-    fail "Cannot collect; max capacity reached." if @van_storage.count >= @capacity
+    @van_storage.count > @capacity
   end
 end
 

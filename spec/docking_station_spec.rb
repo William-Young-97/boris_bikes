@@ -17,7 +17,6 @@ describe Docking_station do
       expect(subject.release_bike).to eq(working_bike)
     end
     it 'Won\'t release a bike if docking station is empty' do
-      p subject.storage
       expect{ subject.release_bike }.to raise_error("No bikes to release.") 
     end
     it 'Won\'t release a broken bike' do
@@ -36,7 +35,7 @@ describe Docking_station do
       expect(subject.dock(working_bike)).to eq([working_bike])
     end 
     it 'Fails if docking station is full' do
-      Docking_station::MAX_CAPACITY.times { subject.dock double(:bike) }
+      Docking_station::DEFAULT_CAPACITY.times { subject.dock double(:bike) }
       expect{ subject.dock double(:bike) }.to raise_error("#{described_class.name} full.")
     end
     it 'Allows you to set a max capacity' do

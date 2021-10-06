@@ -21,9 +21,10 @@ shared_examples BikeContainer do
       expect(subject.storage).to eq([bike])
     end
     it 'Raises an error when full' do
-      subject.capacity.times { subject.add_bike(bike) }
+      20.times { subject.add_bike (double(Bike.new)) }
       expect { subject.add_bike(bike) }.to raise_error("#{described_class.name} full.")
     end
+
   end
 
   describe '#remove_bike' do

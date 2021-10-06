@@ -1,18 +1,10 @@
 require_relative 'bike'
 require_relative 'van'
 require_relative 'garage'
-
+require_relative 'bike_container'
 
 class Docking_station
   include BikeContainer
-
-  attr_accessor :capacity, :storage
-  MAX_CAPACITY = 20
-
-  def initialize(capacity=MAX_CAPACITY)
-    @storage = []
-    @capacity = capacity
-  end
 
   def release_bike
     fail "No bikes to release." if storage_empty?
@@ -26,10 +18,6 @@ class Docking_station
   end
   
   private
-  
-  def duplicate?(bike)
-    fail "Bike already docked." if @storage.include?(bike)
-  end
 
   def broken?
     @storage.reverse_each { |bike| return bike if bike.broken }

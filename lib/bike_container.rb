@@ -10,6 +10,7 @@ module BikeContainer
 
   def add_bike(bike)
     fail "#{self.class.name} full." if storage_full?
+    fail "Bike already docked." if duplicate?(bike)
     @storage << bike
   end
   
@@ -26,6 +27,10 @@ module BikeContainer
 
   def storage_empty?
     @storage == []
+  end
+
+  def duplicate?(bike)
+    @storage.include?(bike)
   end
 
 end

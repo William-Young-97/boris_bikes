@@ -1,5 +1,4 @@
 require 'docking_station'
-require_relative 'helper_methods'
 
 describe Van do
   
@@ -10,22 +9,18 @@ describe Van do
   
   describe "#station_collect" do
     it 'Allows the van to collect broken bikes from stations' do
-      expect(subject.station_collect(docking_station)).to eq([])
-      expect(subject.van_storage).to eq([broken_bike])
+      subject.station_collect(docking_station)
+      expect(docking_station.storage).to eq([])
     end
   end
    
     describe "#storage_full?" do
-      let(:docking_station) { double(:station, dock: broken_bike, storage: array) }
-      xit 'Raises an error if it tries to exceed vans max capacity' do
-        docking_station
-        p docking_station
-        van = Van.new
-        docking_station.dock() 
-        p docking_station.storage
-        Van::VAN_MAX_CAPACITY.times { van.station_collect(docking_station) }
-        p van.van_storage
-         expect{ van.station_collect(Bike.new.broken) }.to raise_error("Cannot collect; max capacity reached.")
+      it 'Raises an error if it tries to exceed vans max capacity' do
+        docking_station = Docking_station.new
+        10.times {bike = Bike.new; bike.report_broken; docking_station.dock(bike) } # More than 10 objects breaks runtime as method collects all bikes.
+        subject.station_collect(docking_station) 
+        10.times {bike = Bike.new; bike.report_broken; docking_station.dock(bike) }
+        expect{ subject.station_collect(docking_station) }.to raise_error("Cannot collect; max capacity reached.")
     end
   end
 
