@@ -18,11 +18,26 @@ shared_examples BikeContainer do
   describe '#add_bike' do
     it 'recieves a bike' do
       subject.add_bike(bike)
-      expect(subject.bikes).to eq([bike])
+      expect(subject.storage).to eq([bike])
     end
     it 'Raises an error when full' do
       subject.capacity.times { subject.add_bike(bike) }
       expect { subject.add_bike(bike) }.to raise_error("#{described_class.name} full.")
+    end
+  end
+
+  describe '#remove_bike' do
+    before(:each) { subject.add_bike(bike) }
+    it 'returns a bike' do
+      expect(subject.remove_bike).to eq(bike)
+    end
+    it 'removes the bike from the collection' do
+      subject.remove_bike
+      expect(subject.storage).to eq([])
+    end
+    it 'raises an error when empty' do
+      subject.remove_bike
+      expect { subject.remove_bike }.to raise_error("#{described_class.name} empty.")
     end
   end
 end
