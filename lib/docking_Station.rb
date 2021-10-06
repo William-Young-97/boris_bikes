@@ -2,10 +2,12 @@ require_relative 'bike'
 require_relative 'van'
 require_relative 'garage'
 
+
 class Docking_station
 
-MAX_CAPACITY = 20
 attr_accessor :capacity, :storage
+MAX_CAPACITY = 20
+
   def initialize(capacity=MAX_CAPACITY)
     @storage = []
     @capacity = capacity
@@ -40,5 +42,4 @@ attr_accessor :capacity, :storage
   def broken?
     fail "Cannot release a broken bike."
   end
-
 end

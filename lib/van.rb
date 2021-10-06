@@ -1,13 +1,16 @@
 class Van
 
-  attr_reader :van_storage
+  attr_accessor :van_storage
+  VAN_MAX_CAPACITY = 10
 
   def initialize
     @van_storage = []
+    @capacity = VAN_MAX_CAPACITY
   end
 
   def station_collect(station)
-    station.storage.map { |bike| @van_storage << bike if bike.broken }
+    station.storage.map { |bike| @van_storage << bike if bike.broken && !storage_full? }
+    storage_full?
     station_clear_broken(station)
   end
 
@@ -44,8 +47,12 @@ class Van
     @van_storage.delete_if { |bike| !bike.broken }
   end
 
+  def storage_full?
+    fail "Cannot collect; max capacity reached." if @van_storage.count >= @capacity
+  end
 end
 
 # Notes 
 
 # Consider making a custom push and delete method
+# Add a limiting capacity for the van with testing

@@ -46,5 +46,4 @@ describe Docking_station do
       expect{ subject.dock(working_bike) }.to raise_error("Bike already docked.") 
     end   
   end 
-  
 end

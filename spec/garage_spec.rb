@@ -15,5 +15,4 @@ describe Garage do
       expect(garage.fix).to eq([bike])
     end
   end
-
 end
