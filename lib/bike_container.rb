@@ -33,4 +33,10 @@ module BikeContainer
     @storage.include?(bike)
   end
 
+  def create_vans
+    i = 0
+    van[i] = Van.new
+    i += 1 if storage_full?
+  end
+
 end

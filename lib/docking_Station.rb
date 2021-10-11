@@ -22,4 +22,5 @@ class Docking_station
   def broken?
     @storage.reverse_each { |bike| return bike if bike.broken }
   end
+    
 end

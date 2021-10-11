@@ -15,7 +15,7 @@ describe Van do
   end
    
     describe "#storage_full?" do
-      it 'Raises an error if it tries to exceed vans max capacity' do
+      xit 'Raises an error if it tries to exceed vans max capacity' do
         docking_station = Docking_station.new
         10.times {bike = Bike.new; bike.report_broken; docking_station.dock(bike) } # More than 10 objects breaks runtime as method collects all bikes.
         subject.station_collect(docking_station) 
@@ -53,6 +53,16 @@ describe Van do
       subject.station_collect(docking_station)
       expect(subject.garage_drop_off(garage)).to eq([])
       expect(garage.garage_storage).to eq([bike, broken_bike])
+    end
+  end
+
+  describe '#create_vans' do
+    it 'Class receives input from user' do
+      expect(Van).to respond_to(Van::create_vans)
+    end
+    it 'Generates vans and stores them in a hash' do
+      van = Van.new
+      expect(Van::create_vans).to eq({1 => van})
     end
   end
 end

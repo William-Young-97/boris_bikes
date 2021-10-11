@@ -1,19 +1,21 @@
 class Van
 
-  attr_accessor :van_storage, :capacity
+  attr_accessor :van_storage
   VAN_MAX_CAPACITY = 10
 
-  def initialize
+  def initialize(capacity=VAN_MAX_CAPACITY)
     @van_storage = []
-    @capacity = VAN_MAX_CAPACITY
+    @capacity = capacity
+    @@van_fleet = {}
   end
 
   #look into .shift and custom del/push method
-  
+  # Make station_collect run automatically once bikes are docked
   def station_collect(station) # Possibly set an amount of bikes it can remove capped at 10?
     station.storage.map { |bike| @van_storage << bike } # Ideally remove bikes as I go (cannot del and iterate)
-    station_clear_broken(station) # Clears all bikes if 11 taken (1 extra)
+    # Clears all bikes if 11 taken (1 extra)
     fail "Cannot collect; max capacity reached." if storage_full? 
+    station_clear_broken(station)
     # station_clear_broken(station) Runtime fail if over 11 bikes in storage 
   end
 
@@ -30,6 +32,12 @@ class Van
   def garage_drop_off(garage)
     @van_storage.map { |bike| garage.garage_storage << bike if bike.broken }
     van_clear_broken(garage)
+  end
+
+  def self.create_vans
+    van = Van.new
+    push_to_hash(van)
+    p @@van_fleet
   end
 
   private
@@ -53,6 +61,10 @@ class Van
   def storage_full?
     @van_storage.count > @capacity
   end
+
+  def self.push_to_hash(van)
+    @@van_fleet[1] = van
+  end 
 end
 
 # Notes 
